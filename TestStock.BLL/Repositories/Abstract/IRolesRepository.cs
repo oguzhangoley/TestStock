@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TestStock.Core.Entity.Concrete;
 using TestStock.DAL.Abstract;
+using TestStock.Entity;
 
 namespace TestStock.BLL.Repositories.Abstract
 {
-    public interface IRoleRepository : IRepository<Role>
+    public interface IRolesRepository : IRepository<Roles>
     {
     }
 }

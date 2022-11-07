@@ -43,7 +43,7 @@ namespace TestStock.API
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             //services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
-            //services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IRolesRepository, RolesRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             //services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
@@ -52,6 +52,7 @@ namespace TestStock.API
             //services.AddScoped<IOrderService,OrderManager>();
             services.AddScoped<IProductService,ProductManager>();
             services.AddScoped<ICustomerService,CustomerManager>();
+            services.AddScoped<IRolesService, RolesManager>();
 
         }
 
