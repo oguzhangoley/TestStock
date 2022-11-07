@@ -54,6 +54,8 @@ namespace TestStock.API
             services.AddScoped<ICustomerService,CustomerManager>();
             services.AddScoped<IRolesService, RolesManager>();
 
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
