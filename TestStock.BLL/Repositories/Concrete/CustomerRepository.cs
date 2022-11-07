@@ -7,12 +7,13 @@ using TestStock.BLL.Repositories.Abstract;
 using TestStock.Core.Entity.Concrete;
 using TestStock.DAL.Concrete;
 using TestStock.DAL.Context;
+using TestStock.Entity;
 
 namespace TestStock.BLL.Repositories.Concrete
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class CustomerRepository : Repository<Customer>, ICustomerRepository
     {
-        public UserRepository(ProjectDbContext context) : base(context)
+        public CustomerRepository(ProjectDbContext context) : base(context)
         {
         }
     }

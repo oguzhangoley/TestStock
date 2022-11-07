@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using TestStock.BLL.Abstract;
@@ -25,29 +26,29 @@ namespace TestStock.BLL.Concrete
         {
             var addedCategory = new Category
             {
-                CategoryName = categoryCreateDto.CategoryName,
+                Name = categoryCreateDto.Name,
                 Status = true
             };
             _categoryRepository.Add(addedCategory);
-            return new DataResponse<bool>(true, true,"category added");
+            return new DataResponse<bool>(true, true, "category added");
         }
 
         public IDataResponse<bool> Delete(int id)
         {
-            var deletedCategory = _categoryRepository.GetByFilter(x => x.CategoryId == id);
-            if(deletedCategory == null)
+            var deletedCategory = _categoryRepository.GetByFilter(x => x.Id == id);
+            if (deletedCategory == null)
             {
                 return new DataResponse<bool>(false, false, "category not found");
             }
             deletedCategory.Status = false;
-            _categoryRepository.Update(deletedCategory);
-            return new DataResponse<bool> (true,true, "category deleted");
+            _categoryRepository.Delete(deletedCategory);
+            return new DataResponse<bool>(true, true, "category deleted");
         }
 
         public IDataResponse<List<CategoryListDto>> GetAllCategoris()
         {
             var categories = _categoryRepository.GetAll();
-            if(categories == null)
+            if (categories == null)
             {
                 return new DataResponse<List<CategoryListDto>>(null, false, "categories not found");
             }
@@ -56,11 +57,11 @@ namespace TestStock.BLL.Concrete
             {
                 categoriesListDto.Add(new CategoryListDto
                 {
-                    Id = category.CategoryId,
-                    CategoryName = category.CategoryName
+                    Id = category.Id,
+                    Name = category.Name
                 });
             }
-            return new DataResponse<List<CategoryListDto>>(categoriesListDto,true);
+            return new DataResponse<List<CategoryListDto>>(categoriesListDto, true);
         }
 
         public IDataResponse<List<CategoryListDto>> GetCategoriesByFilter(Expression<Func<Category, bool>> filter)
@@ -75,8 +76,8 @@ namespace TestStock.BLL.Concrete
             {
                 categoriesListDto.Add(new CategoryListDto
                 {
-                    Id = category.CategoryId,
-                    CategoryName = category.CategoryName
+                    Id = category.Id,
+                    Name = category.Name
                 });
             }
             return new DataResponse<List<CategoryListDto>>(categoriesListDto, true);
@@ -87,29 +88,45 @@ namespace TestStock.BLL.Concrete
             var category = _categoryRepository.GetByFilter(filter);
             var categoryListDto = new CategoryListDto
             {
-                Id = category.CategoryId,
-                CategoryName = category.CategoryName
+                Id = category.Id,
+                Name = category.Name
             };
             return new DataResponse<CategoryListDto>(categoryListDto, true);
         }
 
         public IDataResponse<CategoryListDto> GetCategoryById(int categoryId)
         {
-            var category = _categoryRepository.GetByFilter(x=>x.CategoryId == categoryId);
+            var category = _categoryRepository.GetByFilter(x => x.Id == categoryId);
             var categoryListDto = new CategoryListDto
             {
-                Id = category.CategoryId,
-                CategoryName = category.CategoryName
+                Id = category.Id,
+                Name = category.Name
             };
             return new DataResponse<CategoryListDto>(categoryListDto, true);
         }
 
         public IDataResponse<bool> Update(CategoryUpdateDto categoryUpdateDto)
         {
-            var category = _categoryRepository.GetByFilter(x => x.CategoryId == categoryUpdateDto.Id);
-            category.CategoryName = categoryUpdateDto.CategoryName;
-            _categoryRepository.Update(category);
-            return new DataResponse<bool>(true, true, "category updated");
+            if (categoryUpdateDto != null)
+            {
+                _categoryRepository.Update(new()
+                {
+                    Id = categoryUpdateDto.Id,
+                    Name = categoryUpdateDto.Name,
+                    Description = categoryUpdateDto.Description,
+                    Status = categoryUpdateDto.Status,
+
+                });
+                return new DataResponse<bool>(true, true, "category updated");
+
+            }
+            return new DataResponse<bool>(false, false, "Data is not found");
+
+            //var category = _categoryRepository.GetByFilter(x => x.Id == categoryUpdateDto.Id);
+            //category.Name = categoryUpdateDto.Name;
+            //_categoryRepository.Update(category);
+
         }
     }
 }
+
