@@ -15,5 +15,25 @@ namespace TestStock.BLL.Repositories.Concrete
         public OrderRepository(ProjectDbContext context) : base(context)
         {
         }
+
+        public Order Add(int OrderId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Order Delete(int CategoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Order GetAll(int OrderId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Order Remove(int OrderId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

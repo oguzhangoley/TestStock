@@ -8,6 +8,6 @@ namespace TestStock.Core.Entity
 {
     public interface IDto
     {
-        int Id { get; set; }
+        public int Id { get; set; }
     }
 }

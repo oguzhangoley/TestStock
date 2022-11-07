@@ -15,5 +15,30 @@ namespace TestStock.BLL.Repositories.Concrete
         public ProductRepository(ProjectDbContext context) : base(context)
         {
         }
+
+        public Product Add(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Product Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Product GetAll(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Product GetProduct(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Product Remove(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

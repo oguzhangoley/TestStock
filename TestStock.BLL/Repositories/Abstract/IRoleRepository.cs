@@ -10,5 +10,6 @@ namespace TestStock.BLL.Repositories.Abstract
 {
     public interface IRoleRepository : IRepository<Role>
     {
+        Role GetById(int id);
     }
 }

@@ -15,5 +15,10 @@ namespace TestStock.BLL.Repositories.Concrete
         public RoleRepository(ProjectDbContext context) : base(context)
         {
         }
+
+        public Role GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

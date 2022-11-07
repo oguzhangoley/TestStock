@@ -12,8 +12,13 @@ namespace TestStock.BLL.Repositories.Abstract
 {
     public interface ICategoryRepository : IRepository<Category>
     {
-     
-       
+
+
+        Category GetAll(int CategoryId);
+        Category GetCategory(int CategoryId);
+        Category Add(int CategoryId);
+        Category Remove(int CategoryId);
+        Category Delete(int CategoryId);
 
 
 

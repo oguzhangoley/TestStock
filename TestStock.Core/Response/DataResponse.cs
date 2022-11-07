@@ -8,6 +8,9 @@ namespace TestStock.Core.Response
 {
     public class DataResponse<T> : Response, IDataResponse<T>
     {
+        
+       
+
         public T Data { get; set; }
 
         public DataResponse(T data,bool status) : base(status)
@@ -19,5 +22,7 @@ namespace TestStock.Core.Response
         {
             Data=data;
         }
+
+       
     }
 }
