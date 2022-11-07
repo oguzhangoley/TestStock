@@ -10,5 +10,6 @@ namespace TestStock.BLL.Repositories.Abstract
 {
     public interface IOrderRepository : IRepository<Order>
     {
+       
     }
 }

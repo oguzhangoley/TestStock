@@ -32,7 +32,7 @@ namespace TestStock.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ProjectDbContext>(options =>options.UseSqlServer("server= (localdb)\\mssqllocaldb; database = StockDb"));
+            services.AddDbContext<ProjectDbContext>(options =>options.UseSqlServer("Server=coinodb-dev.cjq6i1xxy6zz.eu-central-1.rds.amazonaws.com;Database=EbruSatis;Uid=sa;Password=DtzsCI3HF9n4WIX7O3dj6SSdC43PdpwpMtcaXtDlj8TJy3KDSJ"));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

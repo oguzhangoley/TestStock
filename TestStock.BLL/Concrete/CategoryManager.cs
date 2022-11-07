@@ -56,7 +56,7 @@ namespace TestStock.BLL.Concrete
             {
                 categoriesListDto.Add(new CategoryListDto
                 {
-                    Id = category.CategoryId,
+                    CategoryId = category.CategoryId,
                     CategoryName = category.CategoryName
                 });
             }
@@ -75,7 +75,7 @@ namespace TestStock.BLL.Concrete
             {
                 categoriesListDto.Add(new CategoryListDto
                 {
-                    Id = category.CategoryId,
+                    CategoryId = category.CategoryId,
                     CategoryName = category.CategoryName
                 });
             }
@@ -87,7 +87,7 @@ namespace TestStock.BLL.Concrete
             var category = _categoryRepository.GetByFilter(filter);
             var categoryListDto = new CategoryListDto
             {
-                Id = category.CategoryId,
+                CategoryId = category.CategoryId,
                 CategoryName = category.CategoryName
             };
             return new DataResponse<CategoryListDto>(categoryListDto, true);
@@ -98,7 +98,7 @@ namespace TestStock.BLL.Concrete
             var category = _categoryRepository.GetByFilter(x=>x.CategoryId == categoryId);
             var categoryListDto = new CategoryListDto
             {
-                Id = category.CategoryId,
+                CategoryId = category.CategoryId,
                 CategoryName = category.CategoryName
             };
             return new DataResponse<CategoryListDto>(categoryListDto, true);
@@ -106,7 +106,7 @@ namespace TestStock.BLL.Concrete
 
         public IDataResponse<bool> Update(CategoryUpdateDto categoryUpdateDto)
         {
-            var category = _categoryRepository.GetByFilter(x => x.CategoryId == categoryUpdateDto.Id);
+            var category = _categoryRepository.GetByFilter(x => x.CategoryId == categoryUpdateDto.CategoryId);
             category.CategoryName = categoryUpdateDto.CategoryName;
             _categoryRepository.Update(category);
             return new DataResponse<bool>(true, true, "category updated");
