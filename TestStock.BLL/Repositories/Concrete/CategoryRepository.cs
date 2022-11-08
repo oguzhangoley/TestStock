@@ -10,13 +10,35 @@ using TestStock.Entity;
 
 namespace TestStock.BLL.Repositories.Concrete
 {
-    public class CategoryRepository : Repository<Category>, ICategoryRepository
+    public class CategoryRepository : Repository<Category>,  ICategoryRepository
     {
-        private readonly ICategoryRepository _categoryRepository;
-        public CategoryRepository(ICategoryRepository categoryRepository)
+        public CategoryRepository(ProjectDbContext context) : base(context)
         {
-            _categoryRepository = categoryRepository;
         }
 
+        public Category Add(int CategoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category Delete(int CategoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category GetAll(int CategoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category GetCategory(int CategoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category Remove(int CategoryId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

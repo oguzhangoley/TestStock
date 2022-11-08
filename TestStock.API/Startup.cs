@@ -41,16 +41,16 @@ namespace TestStock.API
             });
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-            //services.AddScoped<IOrderRepository, OrderRepository>();
-            //services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             //services.AddScoped<IRoleRepository, RoleRepository>();
             //services.AddScoped<IUserRepository, UserRepository>();
             //services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             services.AddScoped<ICategoryService, CategoryManager>();
             //services.AddScoped<IAuthService, AuthManager>();
-            //services.AddScoped<IOrderService,OrderManager>();
-            //services.AddScoped<IProductService,ProductManager>();
+            services.AddScoped<IOrderService, OrderManager>();
+            services.AddScoped<IProductService, ProductManager>();
             //services.AddScoped<IUserService,UserManager>();
 
         }

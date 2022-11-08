@@ -40,5 +40,10 @@ namespace TestStock.BLL.Repositories.Concrete
         {
             throw new NotImplementedException();
         }
+
+        public void Update(List<Product> product)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
