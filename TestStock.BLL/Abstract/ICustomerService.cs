@@ -21,7 +21,8 @@ namespace TestStock.BLL.Abstract
         IDataResponse<List<CustomerListDto>> GetCustomersByFilter(Expression<Func<Customer, bool>> filter);
 
         IDataResponse<CustomerListDto> GetCustomerById(int customerId);
+        IDataResponse<Customer> GetCustomerByMail(string mail);
 
-    
+
     }
 }

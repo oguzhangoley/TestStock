@@ -21,5 +21,8 @@ namespace TestStock.BLL.Abstract
         IDataResponse<List<RolesListDto>> GetRolesByFilter(Expression<Func<Roles, bool>> filter);
         IDataResponse<RolesListDto> GetRolesById(int roleId);   
         IDataResponse<RolesListDto> GetRoleByFilter(Expression<Func<Roles, bool>> filter);
+
+
+        void AssignRole(int id);
     }
 }

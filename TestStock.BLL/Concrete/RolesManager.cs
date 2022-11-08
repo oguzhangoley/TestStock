@@ -19,10 +19,13 @@ namespace TestStock.BLL.Concrete
     public class RolesManager : IRolesService
     {
         private readonly IRolesRepository _rolesRepository;
-
-        public RolesManager(IRolesRepository rolesRepository)
+        private readonly IRolesService _rolesService;
+        private readonly ICustomerService _customerService;
+        public RolesManager(IRolesRepository rolesRepository, ICustomerService customerService, IRolesService rolesService)
         {
             _rolesRepository = rolesRepository;
+            _customerService = customerService;
+            _rolesService = rolesService;
         }
 
         public IDataResponse<bool> Add(RolesCreateDto rolesCreateDto)
@@ -35,6 +38,14 @@ namespace TestStock.BLL.Concrete
               };
             _rolesRepository.Add(addedRoles);
             return new DataResponse<bool>(true, true, "roles added");
+        }
+
+        public void AssignRole(int id)
+        {
+            var customer = _customerService.GetCustomersByFilter(x => x.Id == id);
+            //var userRoles=_rolesService.Get
+            RoleAssignListDto dto = new RoleAssignListDto();
+            List<RoleAssignListDto> list=new List<RoleAssignListDto>(); 
         }
 
         public IDataResponse<bool> Delete(int id)

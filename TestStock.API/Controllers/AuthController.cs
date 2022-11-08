@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using TestStock.BLL.Abstract;
 using TestStock.Dto.CustomerDtos;
 
@@ -11,16 +13,19 @@ namespace TestStock.API.Controllers
     public class AuthController : ControllerBase
     {
       private readonly IAuthService _authService;
-
+        
         public AuthController(IAuthService authService)
         {
             _authService = authService;
+
         }
 
-        [HttpPost("Signin")]
-        public IActionResult Signin(string mail, string password)
+        
+
+        [HttpPost("login")]
+        public IActionResult Login(CustomerSignInDto customerSignInDto)
         {
-            var result = _authService.Login(mail, password );
+            var result = _authService.Login(customerSignInDto);
             return Ok(result);
         }
     }

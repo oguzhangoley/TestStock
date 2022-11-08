@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -6,10 +7,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using TestStock.BLL.Abstract;
 using TestStock.BLL.Concrete;
@@ -34,6 +37,23 @@ namespace TestStock.API
         {
             services.AddDbContext<ProjectDbContext>(options =>options.UseSqlServer("Server=coinodb-dev.cjq6i1xxy6zz.eu-central-1.rds.amazonaws.com;Database=ElenStockProject;Uid=sa;Password=DtzsCI3HF9n4WIX7O3dj6SSdC43PdpwpMtcaXtDlj8TJy3KDSJ"));
 
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>{
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters=new TokenValidationParameters
+                {
+                    ValidIssuer="http://localhost",
+                    ValidAudience= "http://localhost",
+                    IssuerSigningKey= new SymmetricSecurityKey(Encoding.UTF8.GetBytes("EzgiElenEzgiElen")),
+                    ValidateIssuerSigningKey=true,
+                    ValidateLifetime = true,     
+                    ClockSkew=TimeSpan.Zero, //SUNCUCCU VE CLÝENT ARASINDA OLUÞABÝLCEK ZAMAN FARKLILIKLARININ ÖNÜNE GEÇMEK ÝÇÝN GECÝKME SÜRESÝ  DEFAULT OLRK ATANIYOR BUNUN ÖNÜNE GEÇTÝM
+
+                };
+               
+            });
+           
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -48,11 +68,11 @@ namespace TestStock.API
             //services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             services.AddScoped<ICategoryService, CategoryManager>();
-            services.AddScoped<IAuthService, AuthManager>();
+            services.AddScoped<IAuthService, NewAuthManager>();
             //services.AddScoped<IOrderService,OrderManager>();
             services.AddScoped<IProductService,ProductManager>();
             services.AddScoped<ICustomerService,CustomerManager>();
-            services.AddScoped<IRolesService, RolesManager>();
+            //services.AddScoped<IRolesService, RolesManager>();
 
             
 
@@ -69,6 +89,8 @@ namespace TestStock.API
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

@@ -10,6 +10,6 @@ namespace TestStock.BLL.Abstract
 {
     public interface IAuthService
     {
-        IDataResponse<CustomerSignInDto> Login(string mail, string password);
+        IDataResponse<string> Login(CustomerSignInDto customerSignInDto);
     }
 }

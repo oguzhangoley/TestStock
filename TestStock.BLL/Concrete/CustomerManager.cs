@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -131,6 +132,16 @@ namespace TestStock.BLL.Concrete
                 return new DataResponse<bool>(true, true, "customer updated");
             }
             return new DataResponse<bool>(false, false, "customer could not be updated");
+        }
+
+        public IDataResponse<Customer> GetCustomerByMail(string mail)
+        {
+            var customer = _customerRepository.GetByFilter(x => x.Email == mail);
+            if(customer == null)
+            {
+                return new DataResponse<Customer>(null, false, "customer not found");
+            }
+            return new DataResponse<Customer>(customer, true);
         }
     }
 }
