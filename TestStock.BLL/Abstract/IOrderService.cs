@@ -8,5 +8,6 @@ namespace TestStock.BLL.Abstract
 {
     public interface IOrderService
     {
+        O
     }
 }

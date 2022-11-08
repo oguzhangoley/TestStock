@@ -16,7 +16,6 @@ namespace TestStock.BLL.Repositories.Abstract
         Product Add(int id);
         Product Remove (int id);
         Product Delete(int id);
-        
-
+        void Update(List<Product> product);
     }
 }

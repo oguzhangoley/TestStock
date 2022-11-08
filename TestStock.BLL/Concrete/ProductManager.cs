@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -18,13 +19,12 @@ namespace TestStock.BLL.Concrete
     public class ProductManager : IProductService
     {
         private readonly IProductRepository _productRepository;
-        public ProductManager(IProductRepository productRepository)
+        private readonly ICategoryRepository _categoryRepository;
+        public ProductManager(IProductRepository productRepository,ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
-
-
-
 
         public IDataResponse<bool> Add(ProductCreateDto productCreateDto)
         {
@@ -84,27 +84,43 @@ namespace TestStock.BLL.Concrete
         }
         public IDataResponse<List<ProductListDto>> GetProductsByFilter(Expression<Func<Product, bool>> filter)
         {
-            var producList = _productRepository.GetByFilter(filter);
-            var productDto = new ProductListDto
+            var producList = _productRepository.GetAllByFilter(filter).ToList();
+            var productListDto = new List<ProductListDto>();    
+            foreach (var product in producList)
             {
-                Id = producList.Id,
-                Name = producList.Name,
-
-            };
-            return DataResponse.
+                productListDto.Add(new ProductListDto
+                {
+                    Id=product.Id,
+                    Name=product.Name,
+                });
+               
+            }
+          
+            return new DataResponse<List<ProductListDto>>(productListDto, true);
           
         }
 
-        public IDataResponse<ProductListDto> GetProductsById(int Id)
+        public IDataResponse<ProductListDto> GetProductById(int id)
         {
-            throw new NotImplementedException();
+
+            var product = _productRepository.GetByFilter(x => x.Id==id);
+            var productListDto = new ProductListDto
+            {
+                Id=product.Id,
+                Name = product.Name,    
+            };
+          return new DataResponse<ProductListDto>(productListDto,true); 
         }
 
         public IDataResponse<bool> Update(ProductUpdateDto productUpdateDto)
         {
-            throw new NotImplementedException();
+            var product = _productRepository.GetByFilter(x => x.Id == productUpdateDto.Id);
+          
+            _productRepository.Update(product);
+            return new DataResponse<bool>(true, true, "product updated");
         }
 
-        
+      
+
     }
 }

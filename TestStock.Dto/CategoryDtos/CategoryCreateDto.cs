@@ -9,6 +9,7 @@ namespace TestStock.Dto.CategoryDtos
 {
     public class CategoryCreateDto : IDto
     {
+
         public string CategoryName { get; set; }
     }
 }

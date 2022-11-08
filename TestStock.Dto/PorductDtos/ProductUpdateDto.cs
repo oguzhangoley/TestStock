@@ -5,6 +5,7 @@ namespace TestStock.Dto.PorductDtos
     public class ProductUpdateDto : IDto
     {
         public int Id { get; set; }
+        public string Name { get; set; }
     }
 
 }

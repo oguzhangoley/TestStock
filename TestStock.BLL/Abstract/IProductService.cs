@@ -18,7 +18,14 @@ namespace TestStock.BLL.Abstract
         IDataResponse<bool> Delete(int id);
         IDataResponse<List<ProductListDto>> GetAllProducts();
         IDataResponse<List<ProductListDto>> GetProductsByFilter(Expression<Func<Product, bool>> filter);
-        IDataResponse<ProductListDto> GetProductsById(int Id);
-        
+        IDataResponse<ProductListDto> GetProductById(int id);
+       
+
+
+
+
+
+
+
     }
 }

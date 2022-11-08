@@ -4,5 +4,6 @@ namespace TestStock.Dto.UserDtos
 {
     public class UserUpdateDto : IDto
     {
+      
     }
 }
