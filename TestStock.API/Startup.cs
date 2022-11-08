@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -6,10 +7,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using TestStock.BLL.Abstract;
 using TestStock.BLL.Concrete;
@@ -32,7 +35,22 @@ namespace TestStock.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ProjectDbContext>(options =>options.UseSqlServer("server= (localdb)\\mssqllocaldb; database = StockDb"));
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            {
+                opt.RequireHttpsMetadata = false;
+                opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    ValidIssuer="http://localhost",
+                    ValidAudience="http://localhost",
+                    IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes("bulamazsýn")),
+                    ValidateIssuerSigningKey=true,
+                    ValidateLifetime=true,
+                    ClockSkew=TimeSpan.Zero,
+
+                };
+            });
+            services.AddDbContext<ProjectDbContext>(options =>options.UseSqlServer("Server=coinodb-dev.cjq6i1xxy6zz.eu-central-1.rds.amazonaws.com;Database=MertSimpleDbExam;Uid=sa;Password=DtzsCI3HF9n4WIX7O3dj6SSdC43PdpwpMtcaXtDlj8TJy3KDSJ"));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -41,17 +59,17 @@ namespace TestStock.API
             });
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-            //services.AddScoped<IOrderRepository, OrderRepository>();
-            //services.AddScoped<IProductRepository, ProductRepository>();
-            //services.AddScoped<IRoleRepository, RoleRepository>();
-            //services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             services.AddScoped<ICategoryService, CategoryManager>();
-            //services.AddScoped<IAuthService, AuthManager>();
-            //services.AddScoped<IOrderService,OrderManager>();
-            //services.AddScoped<IProductService,ProductManager>();
-            //services.AddScoped<IUserService,UserManager>();
+            services.AddScoped<IAuthService, AuthManager>();
+            services.AddScoped<IOrderService, OrderManager>();
+            services.AddScoped<IProductService, ProductManager>();
+            services.AddScoped<IUserService, UserManager>();
 
         }
 
@@ -67,6 +85,7 @@ namespace TestStock.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

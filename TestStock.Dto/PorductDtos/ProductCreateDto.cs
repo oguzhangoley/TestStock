@@ -9,6 +9,10 @@ namespace TestStock.Dto.PorductDtos
 {
     public class ProductCreateDto : IDto
     {
+        public string Name { get; set; }
+        public decimal UnitPrice { get; set; }
+        public int UnitInStock { get; set; }
+        public int CategoryId { get; set; }
     }
 
 }
