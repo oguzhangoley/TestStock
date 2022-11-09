@@ -33,12 +33,6 @@ namespace TestStock.BLL.Concrete
             var addedOrder = new Order
             {
                OrderId=orderCreateDto.OrderId,
-                OrderName = orderCreateDto.OrderName,
-                ProductId=orderCreateDto.ProductId,
-                CategoryId=orderCreateDto.CategoryId,
-                OrderCustomer =orderCreateDto.OrderCustomer,
-               
-              
             };
             _orderRepository.Add(addedOrder);
             return new DataResponse<bool>(true, true, "addedOrder");

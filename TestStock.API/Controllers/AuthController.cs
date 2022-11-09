@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TestStock.Core;
 
 namespace TestStock.API.Controllers
 {
@@ -8,5 +9,14 @@ namespace TestStock.API.Controllers
     public class AuthController : ControllerBase
     {
         // Login Register Apileri bu controller'da yapılacak
+        [HttpPost]
+        public IActionResult Login()
+        {
+
+
+
+            return Created("", new JwtTokenGenerator().GenerateToken());
+        }
+
     }
 }

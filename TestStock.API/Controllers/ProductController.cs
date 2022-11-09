@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestStock.BLL.Abstract;
 using TestStock.Dto.PorductDtos;
@@ -22,7 +23,7 @@ namespace TestStock.API.Controllers
             var producs = _productService.GetAllProducts();
             return Ok(producs);
         }
-
+        [Authorize]
         [HttpGet("product")]
         public IActionResult GetProductById(int id)
         {

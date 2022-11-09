@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestStock.BLL.Abstract;
 using TestStock.Dto.CategoryDtos;
@@ -31,6 +32,8 @@ namespace TestStock.API.Controllers
             var result = _categoryService.GetCategoryById(categoryId);
             return Ok(result);
         }
+
+        [Authorize]
 
         [HttpPost("addcategory")]
         public IActionResult AddCategory(CategoryCreateDto categoryCreateDto)

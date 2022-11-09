@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using TestStock.Core.Entity;
 
-namespace TestStock.Dto.UserDtos
+namespace TestStock.Entity
 {
-    public class UserCreateDto : IDto
+    public class Users : IEntity
     {
         public int UserId { get; set; }
-        public string UserName{get;set; }
-        public string email { get; set; }
-        public string  password { get; set; }
+        public string UserName { get; set; }
+        public string mail { get; set; }
+        public string password { get; set; }
 
     }
 }
