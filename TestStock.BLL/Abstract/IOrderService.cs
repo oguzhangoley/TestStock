@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TestStock.Core.Response;
+using TestStock.Dto.CategoryDtos;
 using TestStock.Dto.OrderDtos;
 using TestStock.Dto.PorductDtos;
 using TestStock.Entity;
@@ -18,6 +19,7 @@ namespace TestStock.BLL.Abstract
         IDataResponse<bool> Delete(int id);
         IDataResponse<List<OrderListDto>> GetAllOrders();
         IDataResponse<List<OrderListDto>> GetOrdersByFilter(Expression<Func<Order, bool>> filter);
+        IDataResponse<OrderListDto> GetOrderByFilter(Expression<Func<Order, bool>> filter);
         IDataResponse<OrderListDto> GetOrdertById(int id);
 
 
