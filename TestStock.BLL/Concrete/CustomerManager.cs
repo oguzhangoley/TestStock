@@ -18,9 +18,11 @@ namespace TestStock.BLL.Concrete
     public class CustomerManager : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        
         public CustomerManager(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
+            
         }
 
         public IDataResponse<bool> Add(CustomerCreateDto customerCreateDto)
@@ -33,6 +35,7 @@ namespace TestStock.BLL.Concrete
                 UserName = customerCreateDto.UserName,  
                 Email = customerCreateDto.Email,
                 Password=customerCreateDto.Password,
+                Balance = customerCreateDto.Balance,
 
             };
             _customerRepository.Add(addedCustomer);
@@ -69,7 +72,12 @@ namespace TestStock.BLL.Concrete
                     PhoneNumber = customer.PhoneNumber,
                     UserName = customer.UserName,
                     Email = customer.Email,
+                    Balance = customer.Balance,
+                    
+                   
+
                     Password = customer.Password,
+                    
                 });
             }
             return new DataResponse<List<CustomerListDto>>(customersListDto, true);
@@ -86,6 +94,7 @@ namespace TestStock.BLL.Concrete
                 PhoneNumber = customer.PhoneNumber,
                 UserName = customer.UserName,
                 Email = customer.Email,
+                Balance= customer.Balance,
                 Password = customer.Password,
             };
             return new DataResponse<CustomerListDto>(customerListDto, true);
@@ -109,6 +118,7 @@ namespace TestStock.BLL.Concrete
                     PhoneNumber = customer.PhoneNumber,
                     UserName = customer.UserName,
                     Email = customer.Email,
+                    Balance = customer.Balance,
                     Password = customer.Password,
                 });
             }
@@ -128,6 +138,7 @@ namespace TestStock.BLL.Concrete
                 customer.UserName = customerUpdateDto.UserName;
                 customer.Email = customerUpdateDto.Email;
                 customer.Password = customerUpdateDto.Password;
+                customer.Balance = customerUpdateDto.Balance;
 
                 return new DataResponse<bool>(true, true, "customer updated");
             }

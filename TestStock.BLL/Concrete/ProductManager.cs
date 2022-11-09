@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using TestStock.BLL.Abstract;
 using TestStock.BLL.Repositories.Abstract;
 using TestStock.Core.Response;
 using TestStock.Dto.CategoryDtos;
+using TestStock.Dto.OrderDtos;
 using TestStock.Dto.PorductDtos;
 using TestStock.Entity;
 
@@ -17,7 +19,6 @@ namespace TestStock.BLL.Concrete
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
-
         public ProductManager(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
@@ -53,6 +54,7 @@ namespace TestStock.BLL.Concrete
 
         public IDataResponse<List<ProductListDto>> GetAllProducts()
         {
+           
            var products = _productRepository.GetAll();
             if (products== null)
             {
@@ -68,6 +70,7 @@ namespace TestStock.BLL.Concrete
                     Description=product.Description,
                     Price=product.Price,    
                     Stock=product.Stock,
+    
                     CategoryId=product.CategoryId,
                 });
 
@@ -111,6 +114,7 @@ namespace TestStock.BLL.Concrete
             var productListDto = new ProductListDto
             {
                 Id = product.Id,
+                Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
                 Stock = product.Stock,

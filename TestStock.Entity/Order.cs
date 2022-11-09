@@ -9,5 +9,14 @@ namespace TestStock.Entity
 {
     public class Order : IEntity
     {
+        public int Id { get; set; }
+        public int CustomerId { get; set; }
+       // public Customer Customer { get; set; }
+        public int ProductId { get; set; }
+        public bool OrderStatus { get; set; } 
+        public decimal Totalquantity { get; set; }
+        public decimal TotalPrice { get; set; }
+     //   public decimal Balance { get; set; }
+
     }
 }
