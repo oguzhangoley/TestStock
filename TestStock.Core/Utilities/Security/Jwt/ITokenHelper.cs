@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestStock.Core.Entity.Concrete;
-using TestStock.DAL.Abstract;
 
-namespace TestStock.BLL.Repositories.Abstract
+namespace TestStock.Core.Utilities.Security.Jwt
 {
-    public interface IUserRepository : IRepository<User>
+    public interface ITokenHelper
     {
-        List<Role> GetClaims(User user);
+        AccessToken CreateToken(User user, List<Role> roles);
     }
 }

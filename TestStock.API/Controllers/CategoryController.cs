@@ -18,7 +18,7 @@ namespace TestStock.API.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet("categories")]
+        [HttpGet("categoryGet")]
         public IActionResult GetCategories()
         {
             var result = _categoryService.GetAllCategoris();

@@ -12,8 +12,15 @@ namespace TestStock.BLL.Repositories.Concrete
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        public UserRepository(ProjectDbContext context) : base(context)
+        private readonly IUserRoleRepository _userRoleRepository;
+        public UserRepository(ProjectDbContext context, IUserRoleRepository userRoleRepository) : base(context)
         {
+            _userRoleRepository = userRoleRepository;
+        }
+
+        public List<Role> GetClaims(User user)
+        {
+            return _userRoleRepository.GetClaims(user);
         }
     }
 }

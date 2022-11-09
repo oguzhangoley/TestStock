@@ -14,6 +14,8 @@ namespace TestStock.BLL.Abstract
         IDataResponse<User> Add(UserCreateDto userCreateDto);
         IDataResponse<User> GetByEmail(string email);
         IDataResponse<List<UserListDto>> GetAll();
+        List<Role> GetClaims(User user);
+        IDataResponse<UserOrderDto> GetByIdOrders(int id);
 
 
     }

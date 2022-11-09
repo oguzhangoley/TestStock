@@ -16,10 +16,14 @@ namespace TestStock.BLL.Concrete
     public class UserManager : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IProductRepository _productRepository;
 
-        public UserManager(IUserRepository userRepository)
+        public UserManager(IUserRepository userRepository, IOrderRepository orderRepository, IProductRepository productRepository)
         {
             _userRepository = userRepository;
+            _orderRepository = orderRepository;
+            _productRepository = productRepository;
         }
 
         public IDataResponse<User> Add(UserCreateDto userCreateDto)
@@ -63,6 +67,30 @@ namespace TestStock.BLL.Concrete
         {
             var result = _userRepository.GetByFilter(x => x.Email == email);
             return new DataResponse<User>(result, true);
+        }
+
+        public IDataResponse<UserOrderDto> GetByIdOrders(int id)
+        {
+            var user = _orderRepository.GetByFilter(x => x.UserId == id);
+            var product=_productRepository.GetByFilter(x => x.Id == user.ProductId);
+            
+
+            var userOrderDto = new UserOrderDto();
+            userOrderDto.ProductName = product.Name;
+            userOrderDto.ProductQuantity = user.ProductQuantity;
+            userOrderDto.Email=_userRepository.GetByFilter(x=>x.Id == user.Id).Email;
+            userOrderDto.TotalPrice = product.UnitPrice * user.ProductQuantity;
+            userOrderDto.Balance=_userRepository.GetByFilter(x=>x.Id==user.Id).Balance;
+
+            return new DataResponse<UserOrderDto>(userOrderDto, true);
+
+
+        }
+
+        public List<Role> GetClaims(User user)
+        {
+            var result = _userRepository.GetClaims(user);
+            return result;
         }
     }
 }

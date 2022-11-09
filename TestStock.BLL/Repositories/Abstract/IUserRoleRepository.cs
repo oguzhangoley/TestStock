@@ -10,5 +10,6 @@ namespace TestStock.BLL.Repositories.Abstract
 {
     public interface IUserRoleRepository : IRepository<UserRoles>
     {
+        List<Role> GetClaims(User user);
     }
 }

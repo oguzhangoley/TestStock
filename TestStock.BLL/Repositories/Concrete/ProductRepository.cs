@@ -15,5 +15,7 @@ namespace TestStock.BLL.Repositories.Concrete
         public ProductRepository(ProjectDbContext context) : base(context)
         {
         }
+
+    
     }
 }

@@ -32,7 +32,7 @@ namespace TestStock.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("productsGetAll")]
+        [HttpPost("productAdd")]
         public IActionResult AddedProduct(ProductCreateDto productCreateDto)
         {
             var result = _productService.Add(productCreateDto);

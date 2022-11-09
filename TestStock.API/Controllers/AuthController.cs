@@ -28,7 +28,18 @@ namespace TestStock.API.Controllers
         public IActionResult Login(UserLoginDto userLoginDto)
         {
             var result = _authService.Login(userLoginDto);
-            return Ok(result);
+            if (result.Status == false)
+            {
+                return BadRequest();
+            }
+            var token = _authService.CreateAccessToken(result.Data);
+            if (token.Data == null)
+            {
+                return BadRequest();
+            }
+            return Ok(token);
+
+
         }
     }
 }

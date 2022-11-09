@@ -26,5 +26,12 @@ namespace TestStock.API.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("getbyId")]
+        public IActionResult GetById(int id)
+        {
+            var result = _userService.GetByIdOrders(id);
+            return Ok(result);
+        }
     }
 }

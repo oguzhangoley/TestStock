@@ -19,6 +19,7 @@ using TestStock.BLL.Concrete;
 using TestStock.BLL.Repositories;
 using TestStock.BLL.Repositories.Abstract;
 using TestStock.BLL.Repositories.Concrete;
+using TestStock.Core.Utilities.Security.Jwt;
 using TestStock.DAL.Context;
 
 namespace TestStock.API
@@ -41,22 +42,19 @@ namespace TestStock.API
                 opt.RequireHttpsMetadata = false;
                 opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                 {
-                    ValidIssuer="http://localhost",
-                    ValidAudience="http://localhost",
-                    IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes("bulamazsýn")),
-                    ValidateIssuerSigningKey=true,
-                    ValidateLifetime=true,
-                    ClockSkew=TimeSpan.Zero,
+                    ValidIssuer = "http://localhost",
+                    ValidAudience = "http://localhost",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("bulamazsýnbulamazsýnbulamazsýnbulamazsýnbulamazsýn")),
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
 
                 };
             });
-            services.AddDbContext<ProjectDbContext>(options =>options.UseSqlServer("Server=coinodb-dev.cjq6i1xxy6zz.eu-central-1.rds.amazonaws.com;Database=MertSimpleDbExam;Uid=sa;Password=DtzsCI3HF9n4WIX7O3dj6SSdC43PdpwpMtcaXtDlj8TJy3KDSJ"));
+            services.AddDbContext<ProjectDbContext>(options => options.UseSqlServer("Server=coinodb-dev.cjq6i1xxy6zz.eu-central-1.rds.amazonaws.com;Database=MertSimpleDbExam;Uid=sa;Password=DtzsCI3HF9n4WIX7O3dj6SSdC43PdpwpMtcaXtDlj8TJy3KDSJ"));
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestStock.API", Version = "v1" });
-            });
+        
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
@@ -70,8 +68,47 @@ namespace TestStock.API
             services.AddScoped<IOrderService, OrderManager>();
             services.AddScoped<IProductService, ProductManager>();
             services.AddScoped<IUserService, UserManager>();
+            services.AddScoped<ITokenHelper, JwtHelper>();
+            services.AddCors(cors =>
+            {
+                cors.AddPolicy("StockCorsPolicy", opt =>
+                {
+                    opt.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
 
+        
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "StockApi", Version = "v1" });
+
+                c.AddSecurityDefinition(name: "Bearer", securityScheme: new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Id = "Bearer",
+                                Type = ReferenceType.SecurityScheme
+                            }
+                        },
+                        new List<string>()
+                    }
+                });
+            });
         }
+
+            
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
