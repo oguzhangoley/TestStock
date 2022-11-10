@@ -19,19 +19,22 @@ namespace TestStock.BLL.Concrete
 {
     public class OrderManager : IOrderService
     {
-        private readonly IProductService _productService;
-        private readonly ICustomerService _customerService;
+        //private readonly IProductService _productService;
+        //private readonly ICustomerService _customerService;
+        private readonly IProductRepository _productRepository;
+        private readonly ICustomerRepository _customerRepository;
+
         private readonly IOrderRepository _orderRepository;
 
         //Product product = new Product();
 
         Customer customer = new Customer();
 
-        public OrderManager(IProductService productService, ICustomerService customerService, IOrderRepository orderRepository)
+        public OrderManager(IProductRepository productRepository, ICustomerRepository customerRepository, IOrderRepository orderRepository)
         {
-            _productService = productService;
+            _productRepository = productRepository;
 
-            _customerService = customerService;
+            _customerRepository = customerRepository;
             _orderRepository = orderRepository;
         }
 
@@ -45,6 +48,7 @@ namespace TestStock.BLL.Concrete
                 CustomerId = orderCreateDto.CustomerId,
                 ProductId = orderCreateDto.ProductId,
                 Totalquantity = orderCreateDto.Totalquantity,
+               
 
             };
 
@@ -65,7 +69,14 @@ namespace TestStock.BLL.Concrete
 
         public IDataResponse<List<OrderListDto>> GetAllOrders()
         {
+            //ORDER I LİSTTE TUTUNCA PROPLARIM GELMİYOR SEBEBİNİ ARAŞTIR
+            
             var orders = _orderRepository.GetAll();
+            var orderListDto=new List<OrderListDto>();
+
+            //var customer = _customerRepository.GetByFilter(x => x.Id == ordersListDto.CustomerId);
+
+            //var product = _productRepository.GetByFilter(x => x.Id == ordersListDto.ProductId);
             if (orders == null)
             {
                 return new DataResponse<List<OrderListDto>>(null, false, "orders not found");
@@ -73,28 +84,43 @@ namespace TestStock.BLL.Concrete
             }
 
             //var product=_productService.GetProductById(orders.)
-            var ordersListDto = new List<OrderListDto>();
 
+            //var order = new Order()
+            //{
+            //    Id = orderListDto,
+            //    CustomerId = customer.Id,
+            //    ProductId = product.Id,
+            //    OrderStatus = ordersListDto.OrderStatus,
+            //    TotalPrice = product.Price * ordersListDto.Totalquantity,
+            //    Totalquantity = ordersListDto.Totalquantity,
+
+            //};
+            
 
             foreach (var order in orders)
             {
-                int price = (int)_productService.GetProductById(order.ProductId).Data.Price;
+                var product = _productRepository.GetByFilter(x => x.Id == order.ProductId);
+                if (order.TotalPrice > customer.Balance)
+                {
+                    return new DataResponse<List<OrderListDto>>(null, false, "balance is not enough");
+                }
 
-                ordersListDto.Add(new OrderListDto
+
+                _orderRepository.Update(order);
+                orderListDto.Add(new OrderListDto
                 {
 
                     Id = order.Id,
-                    CustomerId = order.CustomerId,
-                    ProductId = order.ProductId,
-
-                    ProductName = _productService.GetProductById(order.ProductId).Data.Name,
+                    CustomerName=customer.CustomerName,
+                    ProductName =product.Name,
                     OrderStatus = true,
-                    //TotalPrice = order.TotalPrice,
-                    TotalPrice = price * order.Totalquantity,
+                    TotalPrice = product.Price * order.Totalquantity,
                     Totalquantity = order.Totalquantity,
+                    Balance=customer.Balance -order.TotalPrice
                 });
             }
-            return new DataResponse<List<OrderListDto>>(ordersListDto, true);
+            return new DataResponse<List<OrderListDto>>(orderListDto, true);
+
         }
 
         public IDataResponse<OrderListDto> GetOrderById(int id)
@@ -105,30 +131,28 @@ namespace TestStock.BLL.Concrete
                 return new DataResponse<OrderListDto>(null, false, "order not found");
             }
 
-            var product = _productService.GetProductById(order.ProductId);
-            var balance = _customerService.GetCustomerById(order.CustomerId).Data.Balance;
+            var _product=_productRepository.GetByFilter(x => x.Id == id);   
+            var customer =_customerRepository.GetByFilter(x => x.Id == id);
 
-            if (order.TotalPrice > balance)
+            if (order.TotalPrice > customer.Balance)
             {
                 return new DataResponse<OrderListDto>(null, false, "balance is not enough");
             }
-            order.TotalPrice = product.Data.Price * order.Totalquantity;
-            // order.Balance = balance - (order.TotalPrice);
-            order.OrderStatus = true;
-            product.Data.Stock = (product.Data.Stock) - (int)(order.Totalquantity);
+          
 
             _orderRepository.Update(order);
 
             OrderListDto orderListDto = new OrderListDto()
             {
                 Id = order.Id,
-                CustomerId = order.CustomerId,
-                //ProductId = order.ProductId,    
-                Balance = balance,
+                //CustomerId = order.CustomerId,
+                CustomerName=customer.CustomerName,
+                //ProductId = _product.Id,    
                 OrderStatus = order.OrderStatus,
                 Totalquantity = order.Totalquantity,
-                TotalPrice = order.TotalPrice,
-                ProductName = _productService.GetProductById(order.ProductId).Data.Name,
+                TotalPrice = _product.Price*order.Totalquantity,
+                Balance = customer.Balance - order.TotalPrice,
+                ProductName = _product.Name,
 
             };
 

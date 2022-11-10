@@ -16,7 +16,6 @@ namespace TestStock.Entity
         public bool OrderStatus { get; set; } 
         public decimal Totalquantity { get; set; }
         public decimal TotalPrice { get; set; }
-     //   public decimal Balance { get; set; }
 
     }
 }

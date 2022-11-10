@@ -19,12 +19,12 @@ namespace TestStock.BLL.Concrete
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IOrderService _orderService;
-        public ProductManager(IProductRepository productRepository, ICategoryRepository categoryRepository/* IOrderService orderService*/)
+        private readonly IOrderRepository _orderRepository;
+        public ProductManager(IProductRepository productRepository, ICategoryRepository categoryRepository, IOrderRepository orderRepository)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
-            //_orderService = orderService;
+            _orderRepository = orderRepository;
         }
 
         public IDataResponse<bool> Add(ProductCreateDto productCreateDto)
@@ -65,16 +65,17 @@ namespace TestStock.BLL.Concrete
             var productsListDto=new List<ProductListDto>();
             foreach (var product in products)
             {
-                ProductListDto productListDto=new ProductListDto();
                 productsListDto.Add(new ProductListDto
                 {
                     Id = product.Id,
                     Name=product.Name,
                     Description=product.Description,
+                    CategoryName=_categoryRepository.GetByFilter(x=>x.Id==product.CategoryId).Name,
                     Price=product.Price,    
+                    //Stock=(int)_orderRepository.GetByFilter(x=>x.Id==product.Id).Totalquantity-product.Stock,
                     Stock=product.Stock,
     
-                    CategoryId=product.CategoryId,
+                    
                 });
 
             }
@@ -131,14 +132,13 @@ namespace TestStock.BLL.Concrete
             var product = _productRepository.GetByFilter(x=>x.Id==productUpdateDto.Id);
             if (product!=null)
             {
-                _productRepository.Update(new()
-                {
-                    Id = product.Id,
-                    Description = product.Description,
-                    Price = product.Price,
-                    Stock = product.Stock,
-                    CategoryId = product.CategoryId,
-                });
+                product.Id=productUpdateDto.Id;
+                product.Name= productUpdateDto.Name;
+                product.CategoryId= productUpdateDto.CategoryId;
+                product.Description= productUpdateDto.Description;
+                product.Price= productUpdateDto.Price;
+                product.Stock= productUpdateDto.Stock;
+                
 
                 return new DataResponse<bool>( true, true, "category updated");
             }
