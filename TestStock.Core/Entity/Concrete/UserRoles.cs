@@ -8,5 +8,8 @@ namespace TestStock.Core.Entity.Concrete
 {
     public class UserRoles : IEntity
     {
+        public int UserId { get; set; }
+        public int RoleId { get; set; }
+        public int Id { get; set; }
     }
 }

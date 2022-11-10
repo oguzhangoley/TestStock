@@ -42,7 +42,7 @@ namespace TestStock.API
                 {
                     ValidIssuer = "http://localhost",
                     ValidAudience = "http://localhost",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("EbruEbruEbru1.")),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("EbruEbruEbruEbruEbruEbruEbruEbruEbruEbruEbruEbruEbru")),
                     ValidateIssuerSigningKey=true,
                     ValidateLifetime=true,
                     ClockSkew=TimeSpan.Zero,
@@ -66,12 +66,13 @@ namespace TestStock.API
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             services.AddScoped<ICategoryService, CategoryManager>();
-            //services.AddScoped<IAuthService, AuthManager>();
+            services.AddScoped<IAuthService, AuthManager>();
             services.AddScoped<IOrderService, OrderManager>();
             services.AddScoped<IProductService, ProductManager>();
-            //services.AddScoped<IUserService,UserManager>();
+            services.AddScoped<IUserService,UserManager>();
 
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -10,5 +10,6 @@ namespace TestStock.BLL.Repositories.Abstract
 {
     public interface IUserRepository : IRepository<User>
     {
+        object Delete(int id);
     }
 }

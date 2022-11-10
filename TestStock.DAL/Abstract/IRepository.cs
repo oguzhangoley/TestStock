@@ -13,7 +13,7 @@ namespace TestStock.DAL.Abstract
         void Add(T entity);
         void Update(T entity);
         void Delete(T entity);
-        List<T> GetAll();
+        List<T> GetAllUser();
         List<T> GetAllByFilter(Expression<Func<T, bool>> filter);
 
         T GetByFilter(Expression<Func<T, bool>> filter);

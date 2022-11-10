@@ -8,5 +8,6 @@ namespace TestStock.Core.Entity
 {
     public interface IEntity
     {
+       
     }
 }

@@ -18,10 +18,10 @@ namespace TestStock.DAL.Context
         }
 
         public DbSet<User> Users { get; set; }
-       // public DbSet<UserRoles> UserRoles { get; set; }
+        public DbSet<UserRoles> UserRole { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Category> Category { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Product> Product { get; set; }
         public DbSet<Order> Order { get; set; }
     }
 }

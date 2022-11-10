@@ -56,7 +56,7 @@ namespace TestStock.BLL.Concrete
 
         public IDataResponse<List<ProductListDto>> GetAllProducts()
         {
-            var list = _productRepository.GetAll();
+            var list = _productRepository.GetAllUser();
             if(list== null)
             {
                 return new DataResponse<List<ProductListDto>>(null, false, "product found");
@@ -120,7 +120,15 @@ namespace TestStock.BLL.Concrete
             return new DataResponse<bool>(true, true, "product updated");
         }
 
-      
-
+        public IDataResponse<ProductListDto> GetProductByFilter(Expression<Func<Product, bool>> filter)
+        {
+            var product = _productRepository.GetByFilter(filter);
+            var productListDto = new ProductListDto
+            {
+                Id = product.Id,
+                Name = product.Name
+            };
+            return new DataResponse<ProductListDto>(productListDto, true);
+        }
     }
 }

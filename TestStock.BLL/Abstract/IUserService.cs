@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using TestStock.Core.Entity.Concrete;
 using TestStock.Core.Response;
 using TestStock.Dto.CategoryDtos;
 using TestStock.Dto.PorductDtos;
@@ -18,8 +19,8 @@ namespace TestStock.BLL.Abstract
         IDataResponse<bool> Update(UserUpdateDto userUpdateDto);
         IDataResponse<bool> Delete(int id);
         IDataResponse<List<UserListDto>> GetAllUser();
-        IDataResponse<List<UserListDto>> GetUsersByFilter(Expression<Func<Users, bool>> filter);
+        IDataResponse<List<UserListDto>> GetUsersByFilter(Expression<Func<User, bool>> filter);
         IDataResponse<UserListDto> GetUserById(int userId);
-        IDataResponse<UserListDto> GetUserByFilter(Expression<Func<Users, bool>> filter);
+        IDataResponse<UserListDto> GetUserByFilter(Expression<Func<User, bool>> filter);
     }
 }

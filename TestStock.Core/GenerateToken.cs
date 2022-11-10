@@ -12,14 +12,14 @@ namespace TestStock.Core
     public class JwtTokenGenerator
     {
 
-        public void GenerateToken()
+        public string  GenerateToken()
         {
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("EbruEbruEbru1."));
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("EbruEbruEbruEbruEbruEbruEbruEbruEbruEbruEbruEbruEbru"));
             SigningCredentials credentials = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
 
             JwtSecurityToken token = new JwtSecurityToken(issuer: "http://localhost", audience: "http://localhost", notBefore: DateTime.Now, expires: DateTime.Now.AddMinutes(1),signingCredentials: credentials);
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-            handler.WriteToken(token);  
+            return handler.WriteToken(token);  
         }
     }
 }

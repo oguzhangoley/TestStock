@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using TestStock.Core;
 
 namespace TestStock.API.Controllers
@@ -12,11 +13,9 @@ namespace TestStock.API.Controllers
         [HttpPost]
         public IActionResult Login()
         {
-
-
-
             return Created("", new JwtTokenGenerator().GenerateToken());
         }
 
+      
     }
 }

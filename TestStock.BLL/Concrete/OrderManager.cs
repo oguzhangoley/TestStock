@@ -48,7 +48,7 @@ namespace TestStock.BLL.Concrete
 
         public IDataResponse<List<OrderListDto>> GetAllOrders()
         {
-            var orders = _orderRepository.GetAll();
+            var orders = _orderRepository.GetAllUser();
             if (orders == null)
             {
                 return new DataResponse<List<OrderListDto>>(null, false, "orders not found");

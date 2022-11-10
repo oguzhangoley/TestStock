@@ -17,13 +17,14 @@ namespace TestStock.API.Controllers
             _productService = productService;
 
         }
+        [Authorize]
         [HttpGet("products")]
         public IActionResult GetAllProducts()
         {
             var producs = _productService.GetAllProducts();
             return Ok(producs);
         }
-        [Authorize]
+        
         [HttpGet("product")]
         public IActionResult GetProductById(int id)
         {

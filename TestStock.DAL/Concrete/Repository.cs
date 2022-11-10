@@ -32,7 +32,7 @@ namespace TestStock.DAL.Concrete
             _context.SaveChanges();
         }
 
-        public List<T> GetAll()
+        public List<T> GetAllUser()
         {
            return _context.Set<T>().AsNoTracking().ToList();
         }

@@ -46,7 +46,7 @@ namespace TestStock.BLL.Concrete
 
         public IDataResponse<List<CategoryListDto>> GetAllCategoris()
         {
-            var categories = _categoryRepository.GetAll();
+            var categories = _categoryRepository.GetAllUser();
             if(categories == null)
             {
                 return new DataResponse<List<CategoryListDto>>(null, false, "categories not found");
