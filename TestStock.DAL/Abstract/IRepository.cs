@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TestStock.Core.Entity;
+using TestStock.Core.Entity.Concrete;
 
 namespace TestStock.DAL.Abstract
 {

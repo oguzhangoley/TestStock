@@ -18,7 +18,7 @@ namespace TestStock.Core.Security
 
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Role, "Member"));
-
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, "ezgi"));
 
             JwtSecurityToken token = new JwtSecurityToken(
                 issuer: "http://localhost",

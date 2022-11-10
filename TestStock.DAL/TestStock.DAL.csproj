@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TestStock.Core\TestStock.Core.csproj" />
+    <ProjectReference Include="..\TestStock.Dto\TestStock.Dto.csproj" />
     <ProjectReference Include="..\TestStock.Entity\TestStock.Entity.csproj" />
   </ItemGroup>
 

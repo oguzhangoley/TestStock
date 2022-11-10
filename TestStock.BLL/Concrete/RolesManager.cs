@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TestStock.BLL.Abstract;
 using TestStock.BLL.Repositories.Abstract;
 using TestStock.BLL.Repositories.Concrete;
+using TestStock.Core.Entity.Concrete;
 using TestStock.Core.Response;
 using TestStock.Dto.CategoryDtos;
 using TestStock.Dto.PorductDtos;
@@ -19,13 +20,11 @@ namespace TestStock.BLL.Concrete
     public class RolesManager : IRolesService
     {
         private readonly IRolesRepository _rolesRepository;
-        private readonly IRolesService _rolesService;
         private readonly ICustomerService _customerService;
-        public RolesManager(IRolesRepository rolesRepository, ICustomerService customerService, IRolesService rolesService)
+        public RolesManager(IRolesRepository rolesRepository, ICustomerService customerService)
         {
             _rolesRepository = rolesRepository;
             _customerService = customerService;
-            _rolesService = rolesService;
         }
 
         public IDataResponse<bool> Add(RolesCreateDto rolesCreateDto)
@@ -89,6 +88,8 @@ namespace TestStock.BLL.Concrete
             return new DataResponse<RolesListDto>(rolesListDto, true);
         }
 
+      
+
         public IDataResponse<List<RolesListDto>> GetRolesByFilter(Expression<Func<Roles, bool>> filter)
         {
             var roles = _rolesRepository.GetAllByFilter(filter);
@@ -108,6 +109,8 @@ namespace TestStock.BLL.Concrete
             return new DataResponse<List<RolesListDto>>(rolesListDto, true);
 
         }
+
+       
 
         public IDataResponse<RolesListDto> GetRolesById(int roleId)
         {

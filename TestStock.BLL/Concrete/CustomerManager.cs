@@ -7,9 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TestStock.BLL.Abstract;
 using TestStock.BLL.Repositories.Abstract;
+using TestStock.Core.Entity.Concrete;
 using TestStock.Core.Response;
 using TestStock.Dto.CategoryDtos;
 using TestStock.Dto.CustomerDtos;
+using TestStock.Dto.RolesDtos;
 using TestStock.Dto.UserDtos;
 using TestStock.Entity;
 
@@ -18,16 +20,19 @@ namespace TestStock.BLL.Concrete
     public class CustomerManager : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
-        
-        public CustomerManager(ICustomerRepository customerRepository)
+        private readonly ICustomerRoleRepository _customerRoleRepository;
+        private readonly IRolesRepository _rolesRepository;
+
+        public CustomerManager(ICustomerRepository customerRepository, ICustomerRoleRepository customerRoleRepository, IRolesRepository rolesRepository)
         {
             _customerRepository = customerRepository;
-            
+            _customerRoleRepository = customerRoleRepository;
+            _rolesRepository = rolesRepository;
         }
 
         public IDataResponse<bool> Add(CustomerCreateDto customerCreateDto)
         {
-            var addedCustomer = new Customer
+            var addedCustomer = new Customer()
             {
                 CustomerName = customerCreateDto.CustomerName,
                 CustomerSurname = customerCreateDto.CustomerSurname,
@@ -153,6 +158,32 @@ namespace TestStock.BLL.Concrete
                 return new DataResponse<Customer>(null, false, "customer not found");
             }
             return new DataResponse<Customer>(customer, true);
+        }
+
+        public IDataResponse<List<Roles>> GetCustomers(Customer customer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CustomerRoleNamesDto> GetCustomerWithRoleName()
+        {
+            var repository = _customerRepository.GetAll();
+            var customerRoleName = new List<CustomerRoleNamesDto>();
+
+            foreach (var item in repository)
+            {
+                var getCustomerRoles = _customerRoleRepository.GetAllByFilter(x => x.CustomerId == item.Id).FirstOrDefault();
+                //var getRoleName = _rolesService.GetRolesById(getCustomerRoles.RoleId);
+                //var getRoleName = _rolesRepository.GetAllByFilter(x => x.Id==item.Id).FirstOrDefault();
+
+                customerRoleName.Add(new CustomerRoleNamesDto
+                {
+                    userName = item.UserName,
+                    roleName=""
+                });
+
+            }
+            return customerRoleName;
         }
     }
 }

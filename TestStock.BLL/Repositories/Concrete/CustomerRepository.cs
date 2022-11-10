@@ -11,7 +11,7 @@ using TestStock.Entity;
 
 namespace TestStock.BLL.Repositories.Concrete
 {
-    public class CustomerRepository : Repository<Customer>, ICustomerRepository
+    public class CustomerRepository : Repository<Core.Entity.Concrete.Customer>, ICustomerRepository
     {
         public CustomerRepository(ProjectDbContext context) : base(context)
         {

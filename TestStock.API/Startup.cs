@@ -58,6 +58,29 @@ namespace TestStock.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestStock.API", Version = "v1" });
+                c.AddSecurityDefinition(name: "Bearer", securityScheme: new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Id = "Bearer",
+                            Type = ReferenceType.SecurityScheme
+                        }
+                    },
+                    new List<string>()
+                }
+            });
             });
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -65,16 +88,17 @@ namespace TestStock.API
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IRolesRepository, RolesRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-            //services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<ICustomerRoleRepository, CustomerRoleRepository>();
+            //services.AddScoped<IUserRoleRepository, CustomerRoleRepository>();
 
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<IAuthService, NewAuthManager>();
             services.AddScoped<IOrderService,OrderManager>();
             services.AddScoped<IProductService,ProductManager>();
             services.AddScoped<ICustomerService,CustomerManager>();
-            //services.AddScoped<IRolesService, RolesManager>();
+            services.AddScoped<IRolesService, RolesManager>();
 
-            
+
 
         }
 

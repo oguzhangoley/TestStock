@@ -19,7 +19,7 @@ namespace TestStock.API.Controllers
         [HttpPost("AddOrder")]
         public IActionResult AddOrder(OrderCreateDto dto)
         {
-            var result = _orderService.AddOrder(dto);
+            var result = _orderService.AddOrder(dto); //
             return Ok(result);
         }
 
@@ -34,6 +34,13 @@ namespace TestStock.API.Controllers
         public IActionResult GetAllOrder()
         {
             var result = _orderService.GetAllOrders();
+            return Ok(result);
+        }
+
+        [HttpPost("DeleteOrder")]
+        public IActionResult DeleteOrder(int id)
+        {
+            var result = _orderService.DeleteOrder(id);
             return Ok(result);
         }
     }

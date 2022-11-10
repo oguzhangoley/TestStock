@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TestStock.Core.Entity.Concrete;
 using TestStock.Entity;
+using Roles = TestStock.Core.Entity.Concrete.Roles;
 
 namespace TestStock.DAL.Context
 {
@@ -16,9 +17,11 @@ namespace TestStock.DAL.Context
 
         }
 
-        public DbSet<Customer> Customers { get; set; }
-        //public DbSet<UserRoles> UserRoles { get; set; }
+    
+       
         public DbSet<Roles> Roles { get; set; }
+        public DbSet<CustomerRoles> CustomerRoles { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }

@@ -4,8 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using TestStock.Core.Entity.Concrete;
 using TestStock.Core.Response;
 using TestStock.Dto.CustomerDtos;
+using TestStock.Dto.RolesDtos;
 using TestStock.Dto.UserDtos;
 using TestStock.Entity;
 
@@ -22,6 +24,9 @@ namespace TestStock.BLL.Abstract
 
         IDataResponse<CustomerListDto> GetCustomerById(int customerId);
         IDataResponse<Customer> GetCustomerByMail(string mail);
+
+        IDataResponse<List<Roles>> GetCustomers(Customer customer);
+        List<CustomerRoleNamesDto> GetCustomerWithRoleName();
 
 
     }

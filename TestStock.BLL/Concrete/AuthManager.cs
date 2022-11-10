@@ -82,12 +82,12 @@ namespace TestStock.BLL.Concrete
 
 
         //}
-        //public IDataResponse<Customer> Authenticate( string mail, string password)
+        //public IDataResponse<HGHGHGH> Authenticate( string mail, string password)
         //{
         //    var currentUser = _context.Customers.SingleOrDefault(x => x.Email.ToLower() == mail && x.Password.ToLower() == password);
         //    if (currentUser != null)
         //    {
-        //        return  new DataResponse<Customer>(currentUser, true);
+        //        return  new DataResponse<HGHGHGH>(currentUser, true);
                
         //    }
         //    return null;

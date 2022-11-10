@@ -11,7 +11,7 @@ namespace TestStock.Entity
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
-       // public Customer Customer { get; set; }
+       // public HGHGHGH HGHGHGH { get; set; }
         public int ProductId { get; set; }
         public bool OrderStatus { get; set; } 
         public decimal Totalquantity { get; set; }

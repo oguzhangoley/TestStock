@@ -10,9 +10,9 @@ using TestStock.DAL.Context;
 
 namespace TestStock.BLL.Repositories.Concrete
 {
-    public class UserRoleRepository : Repository<UserRoles>, IUserRoleRepository
+    public class CustomerRoleRepository : Repository<CustomerRoles>, ICustomerRoleRepository
     {
-        public UserRoleRepository(ProjectDbContext context) : base(context)
+        public CustomerRoleRepository(ProjectDbContext context) : base(context)
         {
         }
     }

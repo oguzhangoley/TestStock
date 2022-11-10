@@ -30,12 +30,7 @@ namespace TestStock.API.Controllers
             return Ok(result);
          }
 
-        [HttpPost("addCustomer")]
-        public IActionResult AddCustomer(CustomerCreateDto customerCreateDto) 
-        {
-            var result = _customerService.Add(customerCreateDto);
-            return Ok(result);
-        }
+   
 
         [HttpPost("updateCustomer")]
         public IActionResult UpdateCustomer(CustomerUpdateDto customerUpdateDto)
@@ -50,6 +45,13 @@ namespace TestStock.API.Controllers
             var result=_customerService.Delete(customerId);
             return Ok(result);
 
+        }
+
+        [HttpGet("GetCustomers")]
+        public IActionResult GetCustomers()
+        {
+            var result = _customerService.GetCustomerWithRoleName();
+            return Ok(result);
         }
     }
 }

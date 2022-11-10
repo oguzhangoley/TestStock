@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestStock.Core.Entity.Concrete;
-using TestStock.DAL.Abstract;
 
-namespace TestStock.BLL.Repositories.Abstract
+namespace TestStock.Dto.RolesDtos
 {
-    public interface IUserRoleRepository : IRepository<UserRoles>
+    public class CustomerRoleNamesDto
     {
+        public string userName { get; set; }
+        public string roleName { get; set; }
     }
 }

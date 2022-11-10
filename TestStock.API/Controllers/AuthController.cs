@@ -13,19 +13,27 @@ namespace TestStock.API.Controllers
     public class AuthController : ControllerBase
     {
       private readonly IAuthService _authService;
-        
-        public AuthController(IAuthService authService)
+        private readonly ICustomerService _customerService;
+        public AuthController(IAuthService authService, ICustomerService customerService)
         {
             _authService = authService;
-
+            _customerService = customerService;
         }
 
-        
+
 
         [HttpPost("login")]
         public IActionResult Login(CustomerSignInDto customerSignInDto)
         {
             var result = _authService.Login(customerSignInDto);
+            return Ok(result);
+        }
+
+
+        [HttpPost("register")]
+        public IActionResult AddCustomer(CustomerCreateDto customerCreateDto)
+        {
+            var result = _customerService.Add(customerCreateDto);
             return Ok(result);
         }
     }

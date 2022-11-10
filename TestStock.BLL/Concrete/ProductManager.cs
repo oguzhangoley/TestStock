@@ -19,10 +19,12 @@ namespace TestStock.BLL.Concrete
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
-        public ProductManager(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        private readonly IOrderService _orderService;
+        public ProductManager(IProductRepository productRepository, ICategoryRepository categoryRepository/* IOrderService orderService*/)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            //_orderService = orderService;
         }
 
         public IDataResponse<bool> Add(ProductCreateDto productCreateDto)
@@ -63,6 +65,7 @@ namespace TestStock.BLL.Concrete
             var productsListDto=new List<ProductListDto>();
             foreach (var product in products)
             {
+                ProductListDto productListDto=new ProductListDto();
                 productsListDto.Add(new ProductListDto
                 {
                     Id = product.Id,
@@ -111,7 +114,7 @@ namespace TestStock.BLL.Concrete
         public IDataResponse<ProductListDto> GetProductById(int productId)
         {
             var product= _productRepository.GetByFilter(x=>x.Id==productId);
-            var productListDto = new ProductListDto
+            var productListDto = new ProductListDto //
             {
                 Id = product.Id,
                 Name = product.Name,

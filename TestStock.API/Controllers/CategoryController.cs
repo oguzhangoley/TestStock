@@ -6,6 +6,7 @@ using TestStock.Dto.CategoryDtos;
 
 namespace TestStock.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
