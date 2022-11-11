@@ -109,12 +109,29 @@ namespace TestStock.BLL.Concrete
         public IDataResponse<List<UserListDto>> GetUsersByFilter(Expression<Func<User, bool>> filter)
         {
            var users = _userRepository.GetByFilter(filter);
-
+           
+            if (users == null)
+            {
+                return new DataResponse<List<UserListDto>>(null, false, "user not found");
+            }
+            var usersListDto = new List<UserListDto>();
+            foreach (var user in users)
+            {
+                usersListDto.Add(new UserListDto
+                {
+                  UserName=user.UserName,   
+                  
+                });
+            }
+            return new DataResponse<List<UserListDto>>(usersListDto, true);
         }
 
         public IDataResponse<bool> Update(UserUpdateDto userUpdateDto)
         {
-            throw new NotImplementedException();
+           var user = _userRepository.GetByFilter(x => x.UserId == userUpdateDto.UserId);
+            user.UserName = userUpdateDto.UserName;
+            _userRepository.Update(user);
+            return new DataResponse<bool>(true, true, " ")                                                                                   updated");
         }
     }
 }
