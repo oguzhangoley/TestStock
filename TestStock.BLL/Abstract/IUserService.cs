@@ -19,7 +19,7 @@ namespace TestStock.BLL.Abstract
         IDataResponse<bool> Update(UserUpdateDto userUpdateDto);
         IDataResponse<bool> Delete(int id);
         IDataResponse<List<UserListDto>> GetAllUser();
-        IDataResponse<List<UserListDto>> GetUsersByFilter(Expression<Func<User, bool>> filter);
+       
         IDataResponse<UserListDto> GetUserById(int userId);
         IDataResponse<UserListDto> GetUserByFilter(Expression<Func<User, bool>> filter);
     }

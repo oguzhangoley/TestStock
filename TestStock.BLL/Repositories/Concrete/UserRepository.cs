@@ -15,5 +15,10 @@ namespace TestStock.BLL.Repositories.Concrete
         public UserRepository(ProjectDbContext context) : base(context)
         {
         }
+
+        public object Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
